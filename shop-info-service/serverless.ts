@@ -55,8 +55,8 @@ const serverlessConfiguration: AWS = {
         },
       ],
     },
-    getProductListById: {
-      handler: "handler.getProductListById",
+    getProductById: {
+      handler: "handler.getProductById",
       events: [
         {
           http: {

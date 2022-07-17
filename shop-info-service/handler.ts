@@ -2,6 +2,6 @@ import "source-map-support/register";
 import { getShopAdminInfo } from "./handlers/getShopAdminInfo";
 import { getShopInfo } from "./handlers/getShopInfo";
 import { getProductList } from "./handlers/getProductList";
-import { getProductListById } from "./handlers/getProductListById";
+import { getProductById } from "./handlers/getProductById";
 
-export { getShopAdminInfo, getShopInfo, getProductList, getProductListById };
+export { getShopAdminInfo, getShopInfo, getProductList, getProductById };

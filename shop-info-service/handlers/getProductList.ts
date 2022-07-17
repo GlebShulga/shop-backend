@@ -1,6 +1,6 @@
 import { APIGatewayProxyHandler } from "aws-lambda";
 import "source-map-support/register";
-import productList from '../src/data/productList.json'
+import productList from "../src/data/productList.json";
 
 export const getProductList: APIGatewayProxyHandler = async () => {
   return {
