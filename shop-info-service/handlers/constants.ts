@@ -1,0 +1,1 @@
+export const error = "Product not found";
