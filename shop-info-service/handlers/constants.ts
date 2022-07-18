@@ -1,1 +1,1 @@
-export const error = "Product not found";
+export const ERROR = "Product not found";
