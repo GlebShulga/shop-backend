@@ -1,21 +1,21 @@
 import { APIGatewayProxyHandler } from "aws-lambda";
 import "source-map-support/register";
-import productList from "../src/data/productList.json";
+import Product from "../src/services/product";
 import { ERROR } from "./constants";
 
 export const getProductById: APIGatewayProxyHandler = async (event) => {
-  const { id } = event?.pathParameters;
-  const product = await productList.find((item) => item.id === id);
-  const response = product ?? ERROR;
+  const { id } = event.pathParameters;
+  const { rows: product } = await Product.findOneBy(id);
   try {
+    console.log('request product by id -', id)
     return {
       statusCode: 200,
-      body: JSON.stringify(response),
+      body: JSON.stringify(product),
     };
   } catch (error) {
     return {
-      statusCode: 404,
-      body: error,
+      statusCode: 400,
+      body: JSON.stringify(ERROR),
     };
   }
 };

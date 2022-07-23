@@ -14,35 +14,16 @@ const serverlessConfiguration: AWS = {
     environment: {
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: "1",
       NODE_OPTIONS: "--enable-source-maps --stack-trace-limit=1000",
+      PG_HOST: process.env.DATABASE_HOST,
+      PG_PORT: process.env.DATABASE_PORT,
+      PG_USER: process.env.DATABASE_USERNAME,
+      PG_PASSWORD: process.env.DATABASE_PASSWORD,
+      PG_DATABASE: process.env.DATABASE_NAME
     },
     region: "eu-west-1",
   },
 
   functions: {
-    getShopInfo: {
-      handler: "handler.getShopInfo",
-      events: [
-        {
-          http: {
-            method: "get",
-            path: "/shop-info",
-            cors: true,
-          },
-        },
-      ],
-    },
-    getShopAdminInfo: {
-      handler: "handler.getShopAdminInfo",
-      events: [
-        {
-          http: {
-            method: "get",
-            path: "/shop-admin-info",
-            cors: true,
-          },
-        },
-      ],
-    },
     getProductList: {
       handler: "handler.getProductList",
       events: [
@@ -74,7 +55,7 @@ const serverlessConfiguration: AWS = {
       bundle: true,
       minify: false,
       sourcemap: true,
-      exclude: ["aws-sdk"],
+      exclude: ["aws-sdk", "pg-native"],
       target: "node16",
       define: { "require.resolve": undefined },
       platform: "node",
