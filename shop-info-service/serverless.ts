@@ -14,11 +14,11 @@ const serverlessConfiguration: AWS = {
     environment: {
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: "1",
       NODE_OPTIONS: "--enable-source-maps --stack-trace-limit=1000",
-      PG_HOST: process.env.DATABASE_HOST,
-      PG_PORT: process.env.DATABASE_PORT,
-      PG_USER: process.env.DATABASE_USERNAME,
-      PG_PASSWORD: process.env.DATABASE_PASSWORD,
-      PG_DATABASE: process.env.DATABASE_NAME
+      PG_HOST: DATABASE_HOST,
+      PG_PORT: DATABASE_PORT,
+      PG_USER: DATABASE_USERNAME,
+      PG_PASSWORD: DATABASE_PASSWORD,
+      PG_DATABASE: DATABASE_NAME,
     },
     region: "eu-west-1",
   },
@@ -43,6 +43,18 @@ const serverlessConfiguration: AWS = {
           http: {
             method: "get",
             path: "/products/{id}",
+            cors: true,
+          },
+        },
+      ],
+    },
+    createProduct: {
+      handler: "handler.createProduct",
+      events: [
+        {
+          http: {
+            method: "post",
+            path: "/products",
             cors: true,
           },
         },

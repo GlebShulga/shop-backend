@@ -5,10 +5,10 @@ create table product (
   price integer
 );
 
-insert into product(title, store_id, description, price) values
-('Cat`s food', '32ee2762-3e47-4fc0-a498-79d21567946f', 'Food for cat', 26),
-('Dog`s food', '32ee2762-3e47-4fc0-a498-79d21567946f', 'Different food for dog', 15),
-('Fish`s food', '32ee2762-3e47-4fc0-a498-79d21567946f', 'Awesome food for fish', 23)
+insert into product(title, description, price) values
+('Cat`s food', 'Food for cat', 26),
+('Dog`s food', 'Different food for dog', 15),
+('Fish`s food', 'Awesome food for fish', 23)
 
 create table stock (
   product_id uuid not null PRIMARY key,

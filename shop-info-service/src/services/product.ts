@@ -9,11 +9,11 @@ const {
 } = process.env;
 
 const dbOptions = {
-  host: process.env.DATABASE_HOST,
-  port: process.env.DATABASE_PORT,
-  user: process.env.DATABASE_USERNAME
-  password: process.env.DATABASE_PASSWORD,
-  database: process.env.DATABASE_NAME,
+  host: DATABASE_HOST,
+  port: DATABASE_PORT,
+  user: DATABASE_USERNAME,
+  password: DATABASE_PASSWORD,
+  database: DATABASE_NAME,
   debug: true,
   delayMs: 3000,
   ssl: {
@@ -30,6 +30,12 @@ class Product {
     this.client.connect();
   }
 
+  async create(title, description, price) {
+    return await this.client.query(
+        `insert into product(title, description, price) values ('${title}', '${description}', ${price})`
+      );
+  }
+
   async find() {
     return this.client.query(
       "select p.id, p.title, p.description, p.price, s.count from product p inner join stock s on s.product_id = p.id"
@@ -43,7 +49,7 @@ class Product {
   }
 
   end() {
-    this.client.end()
+    this.client.end();
   }
 }
 
