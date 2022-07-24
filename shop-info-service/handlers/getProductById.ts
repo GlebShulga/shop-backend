@@ -6,7 +6,7 @@ import { ERROR } from "./constants";
 export const getProductById: APIGatewayProxyHandler = async (event) => {
   const { id } = event.pathParameters;
   try {
-    console.log('request product by id -', id)
+    console.log("request product by id -", id);
     const { rows: product } = await Product.findOneBy(id);
     return {
       statusCode: 200,
@@ -17,5 +17,7 @@ export const getProductById: APIGatewayProxyHandler = async (event) => {
       statusCode: 400,
       body: JSON.stringify(ERROR),
     };
+  } finally {
+    Product.end();
   }
 };
