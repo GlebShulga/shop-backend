@@ -6,8 +6,8 @@ export const createProduct: APIGatewayProxyHandler = async (event) => {
   const { title, description, price, count } = event.body;
   try {
     console.log("request to create product", event.body);
-    await Product.create(title, description, price, count);
-    return "Product created"
+    const productId = await Product.create(title, description, price, count);
+    return `Product ${productId} created`;
   } catch (error) {
     return {
       statusCode: 500,
