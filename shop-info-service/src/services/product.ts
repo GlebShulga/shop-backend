@@ -9,11 +9,11 @@ const {
 } = process.env;
 
 const dbOptions = {
-  host: DATABASE_HOST,
-  port: DATABASE_PORT,
-  user: DATABASE_USERNAME,
-  password: DATABASE_PASSWORD,
-  database: DATABASE_NAME,
+  host: "db-instance.c90rtrmadoet.eu-west-1.rds.amazonaws.com",
+  port: 5432,
+  user: "postgres",
+  password: "tYPtb6lRXdMBUti6PZhp",
+  database: "shop",
   debug: true,
   delayMs: 3000,
   ssl: {
@@ -30,20 +30,24 @@ class Product {
     this.client.connect();
   }
 
-  async create(title, description, price) {
-    return await this.client.query(
-        `insert into product(title, description, price) values ('${title}', '${description}', ${price})`
-      );
+  async create(title, description, price, count) {
+    const createdProduct = await this.client.query(
+      `insert into product(title, description, price) values ('${title}', '${description}', ${price}) returning id`,
+    );
+    const productId = await createdProduct.rows[0].id
+    await this.client.query(`insert into stock(product_id, count) values ('${productId}', ${count})`)
+
+    return productId
   }
 
   async find() {
-    return this.client.query(
+    return await this.client.query(
       "select p.id, p.title, p.description, p.price, s.count from product p inner join stock s on s.product_id = p.id"
     );
   }
 
   async findOneBy(id) {
-    return this.client.query(
+    return await this.client.query(
       `select p.id, p.title, p.description, p.price, s.count from product p inner join stock s on s.product_id = p.id and p.id = '${id}'`
     );
   }
