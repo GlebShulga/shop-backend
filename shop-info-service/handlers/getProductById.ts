@@ -9,12 +9,13 @@ export const getProductById: APIGatewayProxyHandler = async (event) => {
     console.log("request product by id -", id);
     const { rows: product } = await Product.findOneBy(id);
     return {
+      headers: { "Access-Control-Allow-Origin": "*" },
       statusCode: 200,
       body: JSON.stringify(product),
     };
   } catch (error) {
     return {
-      statusCode: 400,
+      statusCode: 500,
       body: JSON.stringify(ERROR),
     };
   } finally {
