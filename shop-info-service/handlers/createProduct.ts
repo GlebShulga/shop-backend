@@ -9,9 +9,10 @@ export const createProduct: APIGatewayProxyHandler = async (event) => {
     const productId = await Product.create(title, description, price, count);
     return `Product ${productId} created`;
   } catch (error) {
+    const statusCode = error.statusCode || HttpCode.SERVER_ERROR;
     return {
-      statusCode: 500,
-      body: JSON.stringify(error),
+      statusCode: statusCode
+      body: JSON.stringify(error.message),
     };
   } finally {
     Product.end();
