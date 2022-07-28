@@ -11,7 +11,7 @@ export const createProduct: APIGatewayProxyHandler = async (event) => {
   } catch (error) {
     const statusCode = error.statusCode || HttpCode.SERVER_ERROR;
     return {
-      statusCode: statusCode
+      statusCode: statusCode,
       body: JSON.stringify(error.message),
     };
   } finally {
