@@ -1,21 +1,33 @@
 import { APIGatewayProxyHandler } from "aws-lambda";
 import "source-map-support/register";
-import productList from "../src/data/productList.json";
-import { ERROR } from "./constants";
+import Product from "../src/services/product";
+import { HttpCode, HttpError } from "../src/utils/http.utils";
 
 export const getProductById: APIGatewayProxyHandler = async (event) => {
-  const { id } = event?.pathParameters;
-  const product = await productList.find((item) => item.id === id);
-  const response = product ?? ERROR;
+  const { id } = event.pathParameters;
   try {
+    console.log("request product by id -", id);
+    const { rows: product } = await Product.findOneBy(id);
+
+    if (!product) {
+      throw new HttpError(
+        HttpCode.NOT_FOUND,
+        `Product with id: ${id} was not found`
+      )
+    }
+
     return {
+      headers: { "Access-Control-Allow-Origin": "*" },
       statusCode: 200,
-      body: JSON.stringify(response),
+      body: JSON.stringify(product),
     };
   } catch (error) {
+    const statusCode = error.statusCode || HttpCode.SERVER_ERROR;
     return {
-      statusCode: 404,
-      body: error,
+      statusCode: statusCode,
+      body: JSON.stringify(error.message),
     };
+  } finally {
+    Product.end();
   }
 };

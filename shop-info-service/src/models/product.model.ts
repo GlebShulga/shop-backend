@@ -1,14 +1,11 @@
-export interface IProduct {
-  count: Number;
-  description: string;
-  id: string
-  price: Number;
+export interface Product {
+  id: string;
   title: string;
-  category: string;
-  rating: IRating;
+  description: string;
+  price: Number;
 }
 
-interface IRating {
-  rate: Number;
+export interface Stock {
+  product_id: string;
   count: Number
 }
