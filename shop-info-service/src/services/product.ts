@@ -14,8 +14,6 @@ const dbOptions = {
   user: "postgres",
   password: "tYPtb6lRXdMBUti6PZhp",
   database: "shop",
-  debug: true,
-  delayMs: 3000,
   ssl: {
     rejectUnauthorized: false,
   },
@@ -40,8 +38,8 @@ class Product {
     return productId
   }
 
-  async find() {
-    return await this.client.query(
+  find() {
+    return this.client.query(
       "select p.id, p.title, p.description, p.price, s.count from product p inner join stock s on s.product_id = p.id"
     );
   }
