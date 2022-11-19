@@ -27,7 +27,5 @@ export const getProductById: APIGatewayProxyHandler = async (event) => {
       statusCode: statusCode,
       body: JSON.stringify(error.message),
     };
-  } finally {
-    Product.end();
   }
 };
